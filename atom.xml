@@ -6,7 +6,7 @@
   <link href="http://lucylcarus.github.io/atom.xml" rel="self"/>
   
   <link href="http://lucylcarus.github.io/"/>
-  <updated>2024-10-25T01:40:31.538Z</updated>
+  <updated>2024-10-28T15:12:30.050Z</updated>
   <id>http://lucylcarus.github.io/</id>
   
   <author>
@@ -15,6 +15,29 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Ren&#39;py自制插件</title>
+    <link href="http://lucylcarus.github.io/posts/3447be97.html"/>
+    <id>http://lucylcarus.github.io/posts/3447be97.html</id>
+    <published>2024-10-25T07:31:00.000Z</published>
+    <updated>2024-10-28T15:12:30.050Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="立绘动画效果"><a href="#立绘动画效果" class="headerlink" title="立绘动画效果"></a>立绘动画效果</h1><p>包含十余种通用动画效果和两种特殊动画效果<br><a href="https://github.com/lucylcarus/Plug-ins/archive/refs/heads/master.zip">点我下载</a></p>]]></content>
+    
+    
+    <summary type="html">Ren&#39;py引擎中一些实用插件，不定期更新。</summary>
+    
+    
+    
+    <category term="插件" scheme="http://lucylcarus.github.io/categories/%E6%8F%92%E4%BB%B6/"/>
+    
+    
+    <category term="Ren&#39;py" scheme="http://lucylcarus.github.io/tags/Ren-py/"/>
+    
+    <category term="GALGAME引擎" scheme="http://lucylcarus.github.io/tags/GALGAME%E5%BC%95%E6%93%8E/"/>
+    
+  </entry>
   
   <entry>
     <title>Ren&#39;py say界面修改</title>
