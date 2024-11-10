@@ -1,0 +1,648 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Linux命令行(一) | ICARUS</title><meta name="author" content="ICARUS"><meta name="copyright" content="ICARUS"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="Linux是一套免费使用和自由传播的类Unix操作系统，是一个遵循POSIX的多用户、多任务、支持多线程和多CPU的操作系统。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux命令行(一)">
+<meta property="og:url" content="http://lucylcarus.github.io/posts/9211474f.html">
+<meta property="og:site_name" content="ICARUS">
+<meta property="og:description" content="Linux是一套免费使用和自由传播的类Unix操作系统，是一个遵循POSIX的多用户、多任务、支持多线程和多CPU的操作系统。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://img.picui.cn/free/2024/11/09/672f30bcf35b8.jpg">
+<meta property="article:published_time" content="2024-11-04T09:09:23.000Z">
+<meta property="article:modified_time" content="2024-11-09T09:52:32.584Z">
+<meta property="article:author" content="ICARUS">
+<meta property="article:tag" content="Linux">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img.picui.cn/free/2024/11/09/672f30bcf35b8.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://lucylcarus.github.io/posts/9211474f.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=4.13.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script src="/live2d-widget/autoload.js"></script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":200},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.1/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Linux命令行(一)',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-11-09 17:52:32'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/custom.css" media="defer" onload="this.media='all'"><link rel="stylesheet" href="/css/font.css"><link rel="stylesheet" href="/css/mouse.css"><!-- hexo injector head_end start --><link rel="stylesheet" href="https://cdn.cbd.int/hexo-butterfly-wowjs/lib/animate.min.css" media="print" onload="this.media='screen'"><link rel="stylesheet" href="https://cdn.cbd.int/hexo-butterfly-tag-plugins-plus@latest/lib/assets/font-awesome-animation.min.css" media="defer" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.cbd.int/hexo-butterfly-tag-plugins-plus@latest/lib/tag_plugins.css" media="defer" onload="this.media='all'"><script src="https://cdn.cbd.int/hexo-butterfly-tag-plugins-plus@latest/lib/assets/carousel-touch.js"></script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="ICARUS" type="application/atom+xml">
+</head><body><div id="loading-box" onclick="document.getElementById(&quot;loading-box&quot;).classList.add(&quot;loaded&quot;)"><div class="loading-bg"><img class="loading-img nolazyload" src="https://cdn.jsdelivr.net/gh/HappyLeeCode/IMG/img/avatar.webp"/><div class="loading-image-dot"></div><div id="loading-percentage">0%</div></div></div><script>const loadingPercentage = document.getElementById("loading-percentage");
+loadingPercentage.style.color = "black";
+let loadingPercentageTimer = setInterval(function() {
+  var progressBar = document.querySelector(".pace-progress");
+  if (!progressBar) return
+  var currentValue = progressBar.getAttribute("data-progress-text");
+  if (currentValue !== loadingPercentage.textContent) {
+    loadingPercentage.textContent = currentValue;
+    if (currentValue === "100%") {
+      clearInterval(loadingPercentageTimer);
+    }
+  }
+}, 100);
+const preloader = {
+  endLoading: () => {
+    document.body.style.overflow = 'auto';
+    document.getElementById('loading-box').classList.add("loaded")
+  },
+  initLoading: () => {
+    document.body.style.overflow = '';
+    document.getElementById('loading-box').classList.remove("loaded")
+  }
+}
+window.addEventListener('load',()=> { preloader.endLoading() })
+
+if (false) {
+  document.addEventListener('pjax:send', () => { preloader.initLoading() })
+  document.addEventListener('pjax:complete', () => { preloader.endLoading() })
+}</script><script>window.paceOptions = {
+  restartOnPushState: false
+}
+
+document.addEventListener('pjax:send', () => {
+  Pace.restart()
+})
+</script><link rel="stylesheet" href="/css/progress_bar.css"/><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><div id="web_bg" style="background:url(https://img.picui.cn/free/2024/11/09/672f30d78ee2c.jpg);background-attachment: local;background-position: center;background-size: cover;background-repeat: no-repeat;"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://www.helloimg.com/i/2024/11/09/672f8190562c8.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">14</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">5</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 列表</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友情链接</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于我</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://img.picui.cn/free/2024/11/09/672f30bcf35b8.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="ICARUS"><span class="site-name">ICARUS</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 列表</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友情链接</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于我</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Linux命令行(一)</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-11-04T09:09:23.000Z" title="发表于 2024-11-04 17:09:23">2024-11-04</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-11-09T09:52:32.584Z" title="更新于 2024-11-09 17:52:32">2024-11-09</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/">使用教程</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Linux命令行(一)"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="常用快捷键"><a href="#常用快捷键" class="headerlink" title="常用快捷键"></a>常用快捷键</h1><ol>
+<li><p><code>Tab</code>：补全</p>
+</li>
+<li><p><code>Ctrl + C</code>：中止当前正在执行的命令</p>
+</li>
+<li><p><code>Ctrl + D</code>：键盘输入结束</p>
+</li>
+<li><p><code>Ctrl + I</code>：清空终端内容</p>
+</li>
+</ol>
+<h1 id="常用系统工作命令"><a href="#常用系统工作命令" class="headerlink" title="常用系统工作命令"></a>常用系统工作命令</h1><h2 id="echo命令"><a href="#echo命令" class="headerlink" title="echo命令"></a><code>echo</code>命令</h2><p>在终端设备上显示输出字符串的值或变量提取后的值</p>
+<div class="note info modern"><p>输出字符</p>
+</div>
+<blockquote>
+<p>例：<br>输出字符linux<br>echo linux</p>
+</blockquote>
+<div class="note info modern"><p>输出变量提取后的值</p>
+</div>
+<blockquote>
+<p>例：<br>输出SHELL的值<br>echo $SHELL</p>
+</blockquote>
+<h2 id="date命令"><a href="#date命令" class="headerlink" title="date命令"></a><code>date</code>命令</h2><p>显示或设置系统的时间与日期，使用时需在参数前加上符号“+”, 一些参数设置如下表所示</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>%S</td>
+<td>秒(0-59)</td>
+</tr>
+<tr>
+<td>%M</td>
+<td>分(0-59)</td>
+</tr>
+<tr>
+<td>%H</td>
+<td>时(0-23)</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>%I</td>
+<td>小时(0-12)</td>
+</tr>
+<tr>
+<td>%m</td>
+<td>月份(1-12)</td>
+</tr>
+<tr>
+<td>%p</td>
+<td>显示出AM或PM</td>
+</tr>
+<tr>
+<td>%a</td>
+<td>缩写工作日名称</td>
+</tr>
+<tr>
+<td>%A</td>
+<td>完整工作日名称</td>
+</tr>
+<tr>
+<td>%b</td>
+<td>缩写月份名称</td>
+</tr>
+<tr>
+<td>%B</td>
+<td>完整月份名称</td>
+</tr>
+<tr>
+<td>%q</td>
+<td>季度</td>
+</tr>
+<tr>
+<td>%y</td>
+<td>简写年份</td>
+</tr>
+<tr>
+<td>%Y</td>
+<td>完整年份</td>
+</tr>
+<tr>
+<td>%d</td>
+<td>本月中的第几天</td>
+</tr>
+<tr>
+<td>%j</td>
+<td>本年中的第几天</td>
+</tr>
+<tr>
+<td>%n</td>
+<td>换行符</td>
+</tr>
+<tr>
+<td>%t</td>
+<td>缩进</td>
+</tr>
+</tbody>
+</table>
+</div>
+<blockquote>
+<p>例：<br>查看当前系统时间<br>date</p>
+</blockquote>
+<div class="note info modern"><p>输出格式为 星期 月 日 时:分:秒 时区 年</p>
+</div>
+<blockquote>
+<p>例：<br>以<code>年-月-日 时:分:秒</code>的格式查看当前系统时间<br>date “+%Y-%m-%d %H:%M:%S”</p>
+</blockquote>
+<h2 id="timedatectl命令"><a href="#timedatectl命令" class="headerlink" title="timedatectl命令"></a><code>timedatectl</code>命令</h2><p>设置系统时间，常见参数如下表所示</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>status</td>
+<td>显示状态信息</td>
+</tr>
+<tr>
+<td>list-timezones</td>
+<td>列出已知时区</td>
+</tr>
+<tr>
+<td>set-time</td>
+<td>设置系统时间</td>
+</tr>
+<tr>
+<td>set-timezone</td>
+<td>设置生效时区</td>
+</tr>
+</tbody>
+</table>
+</div>
+<blockquote>
+<p>例：<br>设置时区为上海<br>timedatectl set-timezone Asia/Shanghai</p>
+</blockquote>
+<h2 id="reboot命令"><a href="#reboot命令" class="headerlink" title="reboot命令"></a><code>reboot</code>命令</h2><p>重启系统(最好使用root用户)</p>
+<blockquote>
+<p>例：<br>重启系统<br>reboot</p>
+</blockquote>
+<h2 id="poweroff命令"><a href="#poweroff命令" class="headerlink" title="poweroff命令"></a><code>poweroff</code>命令</h2><p>关闭系统(最好使用root用户)</p>
+<blockquote>
+<p>例：<br>关闭系统<br>poweroff</p>
+</blockquote>
+<h2 id="wget命令"><a href="#wget命令" class="headerlink" title="wget命令"></a><code>wget</code>命令</h2><p>下载文件，常用参数如下表所示</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>-b</td>
+<td>后台下载模式</td>
+</tr>
+<tr>
+<td>-P</td>
+<td>下载到指定目录</td>
+</tr>
+<tr>
+<td>-t</td>
+<td>最大尝试次数</td>
+</tr>
+<tr>
+<td>-c</td>
+<td>断点续传</td>
+</tr>
+<tr>
+<td>-p</td>
+<td>下载页面所有资源</td>
+</tr>
+<tr>
+<td>-r</td>
+<td>递归下载</td>
+</tr>
+</tbody>
+</table>
+</div>
+<blockquote>
+<p>例：<br>下载本篇文章<br>wget <a href="https://lucylcarus.github.io/posts/9211474f.html">https://lucylcarus.github.io/posts/9211474f.html</a></p>
+</blockquote>
+<h2 id="ps命令"><a href="#ps命令" class="headerlink" title="ps命令"></a><code>ps</code>命令</h2><p>查看进程状态，常用参数如下表所示</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>-a</td>
+<td>显示所有进程</td>
+</tr>
+<tr>
+<td>-u</td>
+<td>用户以及其他详细信息</td>
+</tr>
+<tr>
+<td>-x</td>
+<td>显示没有控制终端的进程</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="note info modern"><p>Linux中进程常见状态<br>R(运行)  S(中断)   D(不可中断)   Z(僵死)   T(停止)</p>
+</div>
+<h2 id="pstree命令"><a href="#pstree命令" class="headerlink" title="pstree命令"></a><code>pstree</code>命令</h2><p>树状图展示进程间的关系</p>
+<h2 id="top命令"><a href="#top命令" class="headerlink" title="top命令"></a><code>top</code>命令</h2><p>动态监视进程活动及系统负载信息</p>
+<h2 id="nice命令"><a href="#nice命令" class="headerlink" title="nice命令"></a><code>nice</code>命令</h2><p>用于调整进程优先级，用法为<code>nice + 优先级数字 + 服务</code><br>优先级数字范围为-20~19，数字越小，优先级越高</p>
+<blockquote>
+<p>例：<br>调整bash服务的优先级为最高<br>nice -20 bash</p>
+</blockquote>
+<h2 id="pidof命令"><a href="#pidof命令" class="headerlink" title="pidof命令"></a><code>pidof</code>命令</h2><p>查询某个服务进程的pid号码值</p>
+<blockquote>
+<p>例：<br>查询sshd服务的pid<br>pidof sshd</p>
+</blockquote>
+<h2 id="kill命令"><a href="#kill命令" class="headerlink" title="kill命令"></a><code>kill</code>命令</h2><p>终止某个指定pid值的服务进程</p>
+<blockquote>
+<p>例：<br>终止sshd服务<br>kill 2156</p>
+</blockquote>
+<h2 id="killall命令"><a href="#killall命令" class="headerlink" title="killall命令"></a><code>killall</code>命令</h2><p>终止某个指定服务所对应的全部进程</p>
+<blockquote>
+<p>例：<br>终止httpd服务<br>killall httpd</p>
+</blockquote>
+<h1 id="系统状态检测命令"><a href="#系统状态检测命令" class="headerlink" title="系统状态检测命令"></a>系统状态检测命令</h1><h2 id="ifconfig命令"><a href="#ifconfig命令" class="headerlink" title="ifconfig命令"></a><code>ifconfig</code>命令</h2><p>用于获取网卡配置与网络状态等信息</p>
+<blockquote>
+<p>例：<br>查看本机网卡配置与网络状态等信息<br>ifconfig</p>
+</blockquote>
+<h2 id="uname命令"><a href="#uname命令" class="headerlink" title="uname命令"></a><code>uname</code>命令</h2><p>查看系统内核版本与系统结构框架等信息，一般搭配<code>-a</code>使用</p>
+<blockquote>
+<p>例：<br>查看本机系统内核版本与系统结构框架等信息<br>uname -a</p>
+</blockquote>
+<h2 id="uptime命令"><a href="#uptime命令" class="headerlink" title="uptime命令"></a><code>uptime</code>命令</h2><p>查看系统负载信息</p>
+<blockquote>
+<p>例：<br>查看本机系统负载信息<br>uptime</p>
+</blockquote>
+<h2 id="free命令"><a href="#free命令" class="headerlink" title="free命令"></a><code>free</code>命令</h2><p>显示当前系统内存使用量信息</p>
+<blockquote>
+<p>例：<br>显示当前系统内存使用量信息<br>free -h</p>
+</blockquote>
+<h2 id="who命令"><a href="#who命令" class="headerlink" title="who命令"></a><code>who</code>命令</h2><p>查看当前登入主机用户终端信息</p>
+<blockquote>
+<p>例：<br>查看当前登入主机用户终端信息<br>who</p>
+</blockquote>
+<h2 id="last命令"><a href="#last命令" class="headerlink" title="last命令"></a><code>last</code>命令</h2><p>调取主机被访问记录</p>
+<blockquote>
+<p>例：<br>调取主机被访问记录<br>last</p>
+</blockquote>
+<h2 id="ping命令"><a href="#ping命令" class="headerlink" title="ping命令"></a><code>ping</code>命令</h2><p>测试主机间的网络连通性，常用参数如下表所示</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>-c</td>
+<td>总共发送次数</td>
+</tr>
+<tr>
+<td>-l</td>
+<td>指定网卡名称</td>
+</tr>
+<tr>
+<td>-I</td>
+<td>每次间隔时间(秒)</td>
+</tr>
+<tr>
+<td>-W</td>
+<td>最长等待时间(秒)</td>
+</tr>
+</tbody>
+</table>
+</div>
+<blockquote>
+<p>例：<br>ping 百度官网<br>ping www.baidu.com</p>
+</blockquote>
+<h2 id="tracepath命令"><a href="#tracepath命令" class="headerlink" title="tracepath命令"></a><code>tracepath</code>命令</h2><p>显示数据包到达目的主机时途中经过的所有路由信息</p>
+<blockquote>
+<p>例：<br>显示数据包到达百度官网时途中经过的所有路由信息<br>tracepath www.baidu.com</p>
+</blockquote>
+<h2 id="netstat命令"><a href="#netstat命令" class="headerlink" title="netstat命令"></a><code>netstat</code>命令</h2><p>查看网络状态等信息，常用参数如下表所示</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>-a</td>
+<td>显示所有连接中的Socket</td>
+</tr>
+<tr>
+<td>-p</td>
+<td>显示正在使用的Socket信息</td>
+</tr>
+<tr>
+<td>-t</td>
+<td>显示TCP协议的连接状态</td>
+</tr>
+<tr>
+<td>-u</td>
+<td>显示UDP协议的连接状态</td>
+</tr>
+<tr>
+<td>-n</td>
+<td>使用ip地址，不使用域名</td>
+</tr>
+<tr>
+<td>-l</td>
+<td>仅列出正在监听的服务状态</td>
+</tr>
+<tr>
+<td>-i</td>
+<td>现在网卡列表信息</td>
+</tr>
+<tr>
+<td>-r</td>
+<td>显示路由表信息</td>
+</tr>
+</tbody>
+</table>
+</div>
+<blockquote>
+<p>例：<br>显示网卡列表<br>netstat -i</p>
+</blockquote>
+<h2 id="history命令"><a href="#history命令" class="headerlink" title="history命令"></a><code>history</code>命令</h2><p>显示执行过的命令历史，可以使用<code>-c</code>命令清空所有命令历史记录</p>
+<blockquote>
+<p>例：<br>显示执行过的命令历史<br>history -c</p>
+</blockquote>
+<h2 id="sosreport命令"><a href="#sosreport命令" class="headerlink" title="sosreport命令"></a><code>sosreport</code>命令</h2><p>用于收集系统配置及架构信息并输出诊断文档</p>
+<blockquote>
+<p>例：<br>加粗部分为收集好的资料压缩文件及校验码<br>sosreport</p>
+</blockquote>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="http://lucylcarus.github.io">ICARUS</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="http://lucylcarus.github.io/posts/9211474f.html">http://lucylcarus.github.io/posts/9211474f.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://lucylcarus.github.io" target="_blank">ICARUS</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Linux/">Linux</a></div><div class="post_share"><div class="social-share" data-image="https://img.picui.cn/free/2024/11/09/672f30bcf35b8.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/posts/b4c31191.html"><img class="prev-cover" src="https://img.picui.cn/free/2024/11/09/672f1b7b4b8a6.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">Ren'py 历史记录界面修改</div><div class="content">Ren'py引擎中历史记录界面的一些修改，包括添加角色头像，语音重播，记录跳转等。</div></div></a></div><div class="next-post pull-right"><a href="/posts/39e7251c.html"><img class="next-cover" src="https://img.picui.cn/free/2024/11/06/672b4744aa7da.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Ren'py 存档读档界面修改</div><div class="content">Ren'py引擎中存档读档界面的一些修改，包括添加存档描述，删除存档等。</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/posts/ab55f924.html" title="Linux命令行(二)"><img class="cover" src="https://img.picui.cn/free/2024/11/09/672f320acb872.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-11-09</div><div class="title">Linux命令行(二)</div><div class="info">伴随着互联网的发展，Linux得到了来自全世界软件爱好者、组织、公司的支持。它除了在服务器方面保持着强劲的发展势头以外，在个人电脑、嵌入式系统上都有着长足的进步。使用者不仅可以直观地获取该操作系统的实现机制，而且可以根据自身的需要来修改完善Linux，使其最大化地适应用户的需要。</div></div></a></div></div></div><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="gitalk-container"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://www.helloimg.com/i/2024/11/09/672f8190562c8.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">ICARUS</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">14</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">5</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/lucylcarus"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/lucylcarus" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="https://space.bilibili.com/531455345?spm_id_from=333.1007.0.0" target="_blank" title="BILIBILI"><i class="iconfont icon-bilibili" style="color: rgb(0,160,216);"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">欢迎来到我的博客</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%B8%B8%E7%94%A8%E5%BF%AB%E6%8D%B7%E9%94%AE"><span class="toc-number">1.</span> <span class="toc-text">常用快捷键</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%B8%B8%E7%94%A8%E7%B3%BB%E7%BB%9F%E5%B7%A5%E4%BD%9C%E5%91%BD%E4%BB%A4"><span class="toc-number">2.</span> <span class="toc-text">常用系统工作命令</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#echo%E5%91%BD%E4%BB%A4"><span class="toc-number">2.1.</span> <span class="toc-text">echo命令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#date%E5%91%BD%E4%BB%A4"><span class="toc-number">2.2.</span> <span class="toc-text">date命令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#timedatectl%E5%91%BD%E4%BB%A4"><span class="toc-number">2.3.</span> <span class="toc-text">timedatectl命令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#reboot%E5%91%BD%E4%BB%A4"><span class="toc-number">2.4.</span> <span class="toc-text">reboot命令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#poweroff%E5%91%BD%E4%BB%A4"><span class="toc-number">2.5.</span> <span class="toc-text">poweroff命令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#wget%E5%91%BD%E4%BB%A4"><span class="toc-number">2.6.</span> <span class="toc-text">wget命令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ps%E5%91%BD%E4%BB%A4"><span class="toc-number">2.7.</span> <span class="toc-text">ps命令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#pstree%E5%91%BD%E4%BB%A4"><span class="toc-number">2.8.</span> <span class="toc-text">pstree命令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#top%E5%91%BD%E4%BB%A4"><span class="toc-number">2.9.</span> <span class="toc-text">top命令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#nice%E5%91%BD%E4%BB%A4"><span class="toc-number">2.10.</span> <span class="toc-text">nice命令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#pidof%E5%91%BD%E4%BB%A4"><span class="toc-number">2.11.</span> <span class="toc-text">pidof命令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#kill%E5%91%BD%E4%BB%A4"><span class="toc-number">2.12.</span> <span class="toc-text">kill命令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#killall%E5%91%BD%E4%BB%A4"><span class="toc-number">2.13.</span> <span class="toc-text">killall命令</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%B3%BB%E7%BB%9F%E7%8A%B6%E6%80%81%E6%A3%80%E6%B5%8B%E5%91%BD%E4%BB%A4"><span class="toc-number">3.</span> <span class="toc-text">系统状态检测命令</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#ifconfig%E5%91%BD%E4%BB%A4"><span class="toc-number">3.1.</span> <span class="toc-text">ifconfig命令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#uname%E5%91%BD%E4%BB%A4"><span class="toc-number">3.2.</span> <span class="toc-text">uname命令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#uptime%E5%91%BD%E4%BB%A4"><span class="toc-number">3.3.</span> <span class="toc-text">uptime命令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#free%E5%91%BD%E4%BB%A4"><span class="toc-number">3.4.</span> <span class="toc-text">free命令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#who%E5%91%BD%E4%BB%A4"><span class="toc-number">3.5.</span> <span class="toc-text">who命令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#last%E5%91%BD%E4%BB%A4"><span class="toc-number">3.6.</span> <span class="toc-text">last命令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ping%E5%91%BD%E4%BB%A4"><span class="toc-number">3.7.</span> <span class="toc-text">ping命令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#tracepath%E5%91%BD%E4%BB%A4"><span class="toc-number">3.8.</span> <span class="toc-text">tracepath命令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#netstat%E5%91%BD%E4%BB%A4"><span class="toc-number">3.9.</span> <span class="toc-text">netstat命令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#history%E5%91%BD%E4%BB%A4"><span class="toc-number">3.10.</span> <span class="toc-text">history命令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#sosreport%E5%91%BD%E4%BB%A4"><span class="toc-number">3.11.</span> <span class="toc-text">sosreport命令</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/posts/ab55f924.html" title="Linux命令行(二)"><img src="https://img.picui.cn/free/2024/11/09/672f320acb872.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Linux命令行(二)"/></a><div class="content"><a class="title" href="/posts/ab55f924.html" title="Linux命令行(二)">Linux命令行(二)</a><time datetime="2024-11-09T09:09:23.000Z" title="发表于 2024-11-09 17:09:23">2024-11-09</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/b4c31191.html" title="Ren'py 历史记录界面修改"><img src="https://img.picui.cn/free/2024/11/09/672f1b7b4b8a6.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Ren'py 历史记录界面修改"/></a><div class="content"><a class="title" href="/posts/b4c31191.html" title="Ren'py 历史记录界面修改">Ren'py 历史记录界面修改</a><time datetime="2024-11-07T01:42:21.000Z" title="发表于 2024-11-07 09:42:21">2024-11-07</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/9211474f.html" title="Linux命令行(一)"><img src="https://img.picui.cn/free/2024/11/09/672f30bcf35b8.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Linux命令行(一)"/></a><div class="content"><a class="title" href="/posts/9211474f.html" title="Linux命令行(一)">Linux命令行(一)</a><time datetime="2024-11-04T09:09:23.000Z" title="发表于 2024-11-04 17:09:23">2024-11-04</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/39e7251c.html" title="Ren'py 存档读档界面修改"><img src="https://img.picui.cn/free/2024/11/06/672b4744aa7da.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Ren'py 存档读档界面修改"/></a><div class="content"><a class="title" href="/posts/39e7251c.html" title="Ren'py 存档读档界面修改">Ren'py 存档读档界面修改</a><time datetime="2024-10-31T12:14:39.000Z" title="发表于 2024-10-31 20:14:39">2024-10-31</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/3447be97.html" title="Ren'py自制插件"><img src="https://img.picui.cn/free/2024/10/26/671c9b24ae578.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Ren'py自制插件"/></a><div class="content"><a class="title" href="/posts/3447be97.html" title="Ren'py自制插件">Ren'py自制插件</a><time datetime="2024-10-25T07:31:00.000Z" title="发表于 2024-10-25 15:31:00">2024-10-25</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2024 By ICARUS</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.13.0"></script><script src="/js/main.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><script>(() => {
+  const initGitalk = () => {
+    const gitalk = new Gitalk(Object.assign({
+      clientID: 'Ov23li5LzRKF1WX1Jk4J',
+      clientSecret: '33eb011d6460b8ca39349464fc7fb6057753b748',
+      repo: 'gittalk',
+      owner: 'lucylcarus',
+      admin: ['lucylcarus'],
+      id: '1de6b468ac063cf449104a2a8dd66cfa',
+      updateCountCallback: commentCount
+    },null))
+
+    gitalk.render('gitalk-container')
+  }
+
+  const loadGitalk = async() => {
+    if (typeof Gitalk === 'function') initGitalk()
+    else {
+      await getCSS('https://cdn.jsdelivr.net/npm/gitalk@1.8.0/dist/gitalk.min.css')
+      await getScript('https://cdn.jsdelivr.net/npm/gitalk@1.8.0/dist/gitalk.min.js')
+      initGitalk()
+    }
+  }
+  
+  const commentCount = n => {
+    const isCommentCount = document.querySelector('#post-meta .gitalk-comment-count')
+    if (isCommentCount) {
+      isCommentCount.textContent= n
+    }
+  }
+
+  if ('Gitalk' === 'Gitalk' || !false) {
+    if (false) btf.loadComment(document.getElementById('gitalk-container'), loadGitalk)
+    else loadGitalk()
+  } else {
+    window.loadOtherComment = loadGitalk
+  }
+})()</script></div><script src="/js/snowflake.js"></script><div class="aplayer no-destroy" data-id="12622671053" data-server="netease" data-type="playlist"   data-order="list" data-fixed="true" data-preload="auto" data-autoplay="false" data-mutex="true" ></div><script id="canvas_nest" defer="defer" color="0,0,255" opacity="0.7" zIndex="-1" count="99" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/dist/canvas-nest.min.js"></script><script id="click-show-text" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/dist/click-show-text.min.js" data-mobile="false" data-text="Ciallo～(∠・ω&lt; )⌒★" data-fontsize="15px" data-random="false" async="async"></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/metingjs/dist/Meting.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js?v=4.13.0"></script></div></div><!-- hexo injector body_end start --><div class="js-pjax"><script async="async">var arr = document.getElementsByClassName('recent-post-item');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__zoomIn');
+    arr[i].setAttribute('data-wow-duration', '1.5s');
+    arr[i].setAttribute('data-wow-delay', '200ms');
+    arr[i].setAttribute('data-wow-offset', '30');
+    arr[i].setAttribute('data-wow-iteration', '1');
+  }</script><script async="async">var arr = document.getElementsByClassName('card-widget');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__zoomIn');
+    arr[i].setAttribute('data-wow-duration', '');
+    arr[i].setAttribute('data-wow-delay', '200ms');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script><script async="async">var arr = document.getElementsByClassName('flink-list-card');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__flipInY');
+    arr[i].setAttribute('data-wow-duration', '3s');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script><script async="async">var arr = document.getElementsByClassName('flink-list-card');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__animated');
+    arr[i].setAttribute('data-wow-duration', '3s');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script><script async="async">var arr = document.getElementsByClassName('article-sort-item');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__slideInRight');
+    arr[i].setAttribute('data-wow-duration', '1.5s');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script><script async="async">var arr = document.getElementsByClassName('site-card');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__flipInY');
+    arr[i].setAttribute('data-wow-duration', '3s');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script><script async="async">var arr = document.getElementsByClassName('site-card');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__animated');
+    arr[i].setAttribute('data-wow-duration', '3s');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script></div><script defer src="https://cdn.cbd.int/hexo-butterfly-wowjs/lib/wow.min.js"></script><script defer src="https://cdn.cbd.int/hexo-butterfly-wowjs/lib/wow_init.js"></script><script async src="/js/ali_font.js"></script><!-- hexo injector body_end end --><script async>window.onload=function(){var a=document.createElement('script'),b=document.getElementsByTagName('script')[0];a.type='text/javascript',a.async=!0,a.src='/sw-register.js?v='+Date.now(),b.parentNode.insertBefore(a,b)};</script></body></html>
