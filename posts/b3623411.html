@@ -1,0 +1,331 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>MySQL语法使用(四) | ICARUS</title><meta name="author" content="ICARUS"><meta name="copyright" content="ICARUS"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="多关系数据查询多关系查询结构表的连接方法有以下两种  表之间满足一定条件的进行连接时，FROM子句指明进行连接的表名，WHERE子句指明连接的列名及其连接条件。语法格式为12345SELECT [ALL|DISTINCT] [TOP N [PERCENT] [WITH TIES]] &lt;字段名&gt; [AS 别名1] [&#123;,&lt;字段名&gt; [AS 别名2]&#125;]FR">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MySQL语法使用(四)">
+<meta property="og:url" content="http://lucylcarus.github.io/posts/b3623411.html">
+<meta property="og:site_name" content="ICARUS">
+<meta property="og:description" content="多关系数据查询多关系查询结构表的连接方法有以下两种  表之间满足一定条件的进行连接时，FROM子句指明进行连接的表名，WHERE子句指明连接的列名及其连接条件。语法格式为12345SELECT [ALL|DISTINCT] [TOP N [PERCENT] [WITH TIES]] &lt;字段名&gt; [AS 别名1] [&#123;,&lt;字段名&gt; [AS 别名2]&#125;]FR">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://www.helloimg.com/i/2024/11/19/673c83ed68ff8.jpg">
+<meta property="article:published_time" content="2024-11-12T07:42:09.000Z">
+<meta property="article:modified_time" content="2024-11-19T12:30:35.272Z">
+<meta property="article:author" content="ICARUS">
+<meta property="article:tag" content="MySQL">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://www.helloimg.com/i/2024/11/19/673c83ed68ff8.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://lucylcarus.github.io/posts/b3623411.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=4.13.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script src="/live2d-widget/autoload.js"></script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":200},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.1/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'MySQL语法使用(四)',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-11-19 20:30:35'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/custom.css" media="defer" onload="this.media='all'"><link rel="stylesheet" href="/css/font.css"><link rel="stylesheet" href="/css/mouse.css"><!-- hexo injector head_end start --><link rel="stylesheet" href="https://cdn.cbd.int/hexo-butterfly-tag-plugins-plus@latest/lib/assets/font-awesome-animation.min.css" media="defer" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.cbd.int/hexo-butterfly-tag-plugins-plus@latest/lib/tag_plugins.css" media="defer" onload="this.media='all'"><script src="https://cdn.cbd.int/hexo-butterfly-tag-plugins-plus@latest/lib/assets/carousel-touch.js"></script><link rel="stylesheet" href="https://cdn.cbd.int/hexo-butterfly-wowjs/lib/animate.min.css" media="print" onload="this.media='screen'"><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="ICARUS" type="application/atom+xml">
+</head><body><div id="loading-box" onclick="document.getElementById(&quot;loading-box&quot;).classList.add(&quot;loaded&quot;)"><div class="loading-bg"><img class="loading-img nolazyload" src="https://www.helloimg.com/i/2024/11/09/672f8190562c8.png"/><div class="loading-image-dot"></div><div id="loading-percentage">0%</div></div></div><script>const loadingPercentage = document.getElementById("loading-percentage");
+loadingPercentage.style.color = "black";
+let loadingPercentageTimer = setInterval(function() {
+  var progressBar = document.querySelector(".pace-progress");
+  if (!progressBar) return
+  var currentValue = progressBar.getAttribute("data-progress-text");
+  if (currentValue !== loadingPercentage.textContent) {
+    loadingPercentage.textContent = currentValue;
+    if (currentValue === "100%") {
+      clearInterval(loadingPercentageTimer);
+    }
+  }
+}, 100);
+const preloader = {
+  endLoading: () => {
+    document.body.style.overflow = 'auto';
+    document.getElementById('loading-box').classList.add("loaded")
+  },
+  initLoading: () => {
+    document.body.style.overflow = '';
+    document.getElementById('loading-box').classList.remove("loaded")
+  }
+}
+window.addEventListener('load',()=> { preloader.endLoading() })
+
+if (false) {
+  document.addEventListener('pjax:send', () => { preloader.initLoading() })
+  document.addEventListener('pjax:complete', () => { preloader.endLoading() })
+}</script><script>window.paceOptions = {
+  restartOnPushState: false
+}
+
+document.addEventListener('pjax:send', () => {
+  Pace.restart()
+})
+</script><link rel="stylesheet" href="/css/progress_bar.css"/><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><div id="web_bg" style="background:url(https://www.helloimg.com/i/2024/11/19/673c82dee66de.jpg);background-attachment: local;background-position: center;background-size: cover;background-repeat: no-repeat;"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://www.helloimg.com/i/2024/11/09/672f8190562c8.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">16</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">5</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 列表</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友情链接</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于我</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://www.helloimg.com/i/2024/11/19/673c83ed68ff8.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="ICARUS"><span class="site-name">ICARUS</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 列表</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友情链接</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于我</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">MySQL语法使用(四)</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-11-12T07:42:09.000Z" title="发表于 2024-11-12 15:42:09">2024-11-12</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-11-19T12:30:35.272Z" title="更新于 2024-11-19 20:30:35">2024-11-19</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/">使用教程</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="MySQL语法使用(四)"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="多关系数据查询"><a href="#多关系数据查询" class="headerlink" title="多关系数据查询"></a>多关系数据查询</h1><h2 id="多关系查询结构"><a href="#多关系查询结构" class="headerlink" title="多关系查询结构"></a>多关系查询结构</h2><p>表的连接方法有以下两种</p>
+<ol>
+<li>表之间满足一定条件的进行连接时，<code>FROM</code>子句指明进行连接的表名，<code>WHERE</code>子句指明连接的列名及其连接条件。语法格式为<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> [<span class="keyword">ALL</span><span class="operator">|</span><span class="keyword">DISTINCT</span>] [TOP N [<span class="keyword">PERCENT</span>] [<span class="keyword">WITH</span> TIES]] <span class="operator">&lt;</span>字段名<span class="operator">&gt;</span> [<span class="keyword">AS</span> 别名<span class="number">1</span>] [&#123;,<span class="operator">&lt;</span>字段名<span class="operator">&gt;</span> [<span class="keyword">AS</span> 别名<span class="number">2</span>]&#125;]</span><br><span class="line"><span class="keyword">FROM</span> <span class="operator">&lt;</span>表名<span class="number">1</span><span class="operator">&gt;</span> [[<span class="keyword">AS</span>] 表<span class="number">1</span>别名] [&#123;,<span class="operator">&lt;</span>表名<span class="number">2</span><span class="operator">&gt;</span> [[<span class="keyword">AS</span>] 表<span class="number">2</span>别名,……]&#125;]</span><br><span class="line">[<span class="keyword">WHERE</span> <span class="operator">&lt;</span>检索条件<span class="operator">&gt;</span>]</span><br><span class="line">[<span class="keyword">GROUP</span> <span class="keyword">BY</span> <span class="operator">&lt;</span>列名<span class="number">1</span><span class="operator">&gt;</span> [<span class="keyword">HAVING</span> <span class="operator">&lt;</span>条件表达式<span class="operator">&gt;</span>]]</span><br><span class="line">[<span class="keyword">ORDER</span> <span class="keyword">BY</span> <span class="operator">&lt;</span>列名<span class="number">2</span><span class="operator">&gt;</span> [<span class="keyword">ASC</span><span class="operator">|</span><span class="keyword">DESC</span>]];  </span><br></pre></td></tr></table></figure></li>
+<li>利用关键字<code>JOIN</code>进行连接，格式语法如下<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> [<span class="keyword">ALL</span><span class="operator">|</span><span class="keyword">DISTINCT</span>] [TOP N [<span class="keyword">PERCENT</span>] [<span class="keyword">WITH</span> TIES]] 字段名<span class="number">1</span> [<span class="keyword">AS</span> 别名<span class="number">1</span>] [,字段名<span class="number">2</span> [<span class="keyword">AS</span> 别名<span class="number">2</span>]……]</span><br><span class="line"><span class="keyword">FROM</span> 表名<span class="number">1</span> [[<span class="keyword">AS</span>] 表<span class="number">1</span>别名] [<span class="keyword">INNER</span><span class="operator">|</span>[<span class="keyword">LEFT</span><span class="operator">|</span><span class="keyword">RIGHT</span><span class="operator">|</span><span class="keyword">FULL</span><span class="operator">|</span>[<span class="keyword">OUTER</span>]]<span class="operator">|</span><span class="keyword">CROSS</span>] <span class="keyword">JOIN</span> 表名<span class="number">2</span> [[<span class="keyword">AS</span>] 表<span class="number">2</span>别名]</span><br><span class="line"><span class="keyword">ON</span> 条件;  </span><br></pre></td></tr></table></figure>
+相关说明如下<blockquote>
+<p><code>LNNER JOIN</code>成为内连接，用于显示符合条件的记录，此为默认值<br><code>LEFT[OUTER] JOIN</code>称为左连接(外连接)，用于显示符合条件的记录以及左边表中不符合条件的记录(此时右边表记录会以<code>NIULL</code>来显示)<br><code>RIGHT[OUTER] JOIN</code>称为右连接(外连接)，用于显示符合条件的记录以及右边表中不符合条件的记录(此时左边表记录会以<code>NIULL</code>来显示)<br><code>FULL[OUTER] JOIN</code>称为全连接(外连接)，用于显示符合条件的记录以及左边表和右边表中不符合条件的记录(此时缺乏的数据会以<code>NIULL</code>来显示)。目前MYSQL暂不支持全外连接，但可以通过左外连接和右外连接联合实现<br><code>CROSS JOIN</code>称为交叉连接，用于将一个表的记录和另一个表的每个记录匹配成新的记录<br>当将<code>JOIN</code>关键字放于<code>FROM</code>子句中时，应有关键词<code>ON</code>与之对应，以表名连接的条件</p>
+</blockquote>
+</li>
+</ol>
+<h2 id="内连接查询"><a href="#内连接查询" class="headerlink" title="内连接查询"></a>内连接查询</h2><p>实例讲解，现有s和sc两个表，s表中包含学生基本信息(学号(sno)，姓名(sname)，性别(sex)，年龄(age)，专业(major)……)，sc表中包含学生各科成绩(学号(sno)，姓名(sname)，数学(math)，语文(chinese)……)，现要查询学号为<code>114514</code>的学生的学号，姓名，性别，年龄，数学成绩，语文成绩</p>
+<ol>
+<li><p>方法一</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> s.sno,s.sname,sex,age,math,chinese</span><br><span class="line"><span class="keyword">FROM</span> s,sc</span><br><span class="line"><span class="keyword">WHERE</span> s.sno<span class="operator">=</span>&quot;114514&quot; <span class="keyword">AND</span> s.sno<span class="operator">=</span>sc.sno</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>方法二</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> s.sno,s.sname,sex,age,math,chinese</span><br><span class="line"><span class="keyword">FROM</span> s <span class="keyword">INNER</span> <span class="keyword">JOIN</span> sc</span><br><span class="line"><span class="keyword">ON</span> s.sno<span class="operator">=</span>&quot;114514&quot; <span class="keyword">AND</span> s.sno<span class="operator">=</span>sc.sno;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<div class="note info modern"><p>上述语句的学号<code>sno</code>和姓名<code>sname</code>需要加上表名作为前缀(因为两个表中都有，如果不加，学号和姓名会出现两次)，其他字段名由于只出现一次，可以不用添加前缀,<code>s.sno=sc.sno</code>则是将s表中的sno和sc表中的sno进行等值连接</p>
+</div>
+<h2 id="外连接查询"><a href="#外连接查询" class="headerlink" title="外连接查询"></a>外连接查询</h2><p>在内连接查询中，不满足连接条件的元组不能作为查询结果输出，而在外连接查询中，参与连接的表有主从之分，以主表的每行数据去匹配从表的数据列，符合连接条件的数据将直接返回到结果中，对于那些不符合连接条件的列，被填上<code>NULL</code>值后，在返回到结果中<br>外连接查询分为左外连接查询和右外连接查询两种，以主表所在的方向区分外连接查询，主表在左边，则称为左外连接查询，主表在右边，则称其为右外连接查询</p>
+<blockquote>
+<p>例:<br>查询所有学生的学号，姓名，性别，年龄，数学成绩，语文成绩，并按学号排序<br>SELECT s.sno,s.sname,sex,age,math,chinese<br>FROM s LEFT OUTER JOIN sc ON  s.sno=sc.sno<br>ORDER BY sno;</p>
+</blockquote>
+<h2 id="交叉连接查询"><a href="#交叉连接查询" class="headerlink" title="交叉连接查询"></a>交叉连接查询</h2><p>交叉连接查询为连接查询没有特殊的要求，任何表都可以进行交叉查询操作</p>
+<blockquote>
+<p>例:<br>对s表和sc表进行交叉查询<br>SELECT *<br>FROM s CROSS JOIN sc;</p>
+</blockquote>
+<h2 id="自连接查询"><a href="#自连接查询" class="headerlink" title="自连接查询"></a>自连接查询</h2><p>当一个表与其自身进行连接查询操作时，称为表的自连接查询<br>比如，查询学号比<code>114514</code>大的学生的学号，姓名，性别</p>
+<ol>
+<li>方法一<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> x.sno <span class="keyword">AS</span> 学号, x.sname <span class="keyword">AS</span> 姓名,x.sex <span class="keyword">AS</span> 性别</span><br><span class="line"><span class="keyword">FROM</span> s <span class="keyword">AS</span> x,s <span class="keyword">AS</span> y</span><br><span class="line"><span class="keyword">WHERE</span> x.sno<span class="operator">&gt;</span>y.sno <span class="keyword">AND</span> y.sno<span class="operator">=</span>&quot;114514&quot;;</span><br></pre></td></tr></table></figure></li>
+<li>方法二<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> x.sno <span class="keyword">AS</span> 学号, x.sname <span class="keyword">AS</span> 姓名,x.sex <span class="keyword">AS</span> 性别</span><br><span class="line"><span class="keyword">FROM</span> s <span class="keyword">AS</span> x <span class="keyword">INNER</span> <span class="keyword">JOIN</span> s <span class="keyword">AS</span> y</span><br><span class="line"><span class="keyword">On</span> x.sno<span class="operator">&gt;</span>y.sno <span class="keyword">AND</span> y.sno<span class="operator">=</span>&quot;114514&quot;;</span><br></pre></td></tr></table></figure>
+<h1 id="子查询"><a href="#子查询" class="headerlink" title="子查询"></a>子查询</h1><h2 id="普通子查询"><a href="#普通子查询" class="headerlink" title="普通子查询"></a>普通子查询</h2>普通子查询的执行顺序：首先执行子查询，然后把子查询的结果带入父查询的查询条件中，普通子查询只执行一次，而父查询所涉及的所有记录行都与其查询结果进行比较以确保查询结果集合<h3 id="返回一个值的普通子查询"><a href="#返回一个值的普通子查询" class="headerlink" title="返回一个值的普通子查询"></a>返回一个值的普通子查询</h3>当子查询的返回值只有一个时，可以使用比较运算符将父查询和子查询连接起来<br>比如，查询比张三年龄大的学生的学号，姓名，年龄<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> sno,sname,age</span><br><span class="line"><span class="keyword">FROM</span> s</span><br><span class="line"><span class="keyword">WHERE</span> age<span class="operator">&gt;</span>(<span class="keyword">SELECT</span> age</span><br><span class="line">           <span class="keyword">FROM</span> s</span><br><span class="line">           <span class="keyword">WHERE</span> sname<span class="operator">=</span>&quot;张三&quot;)</span><br></pre></td></tr></table></figure>
+<h3 id="返回一组值的普通子查询"><a href="#返回一组值的普通子查询" class="headerlink" title="返回一组值的普通子查询"></a>返回一组值的普通子查询</h3>如果子查询的返回值不止一个，而是一个集合，则不能直接使用比较运算符，可以在比较运算符和子查询之间插入<code>ANY</code>和<code>ALL</code>，其中等值关系可以用<code>IN</code>，不等值关系则可使用<code>NOT IN</code><div class="note info modern"><p><code>ANY</code>可以与<code>=、&gt;、&gt;=、&lt;、&lt;=、&lt;&gt;</code>结合起来使⽤，分别表示等于、⼤于、⼤于等于、⼩于、⼩于等于、不等于其中的任何⼀个数据。也就是说只要有任意一个满足就是true，并且显示满足条件的数据。<br><code>ALL</code>可以与<code>=、&gt;、&gt;=、&lt;、&lt;=、&lt;&gt;</code>结合是来使⽤，分别表示等于、⼤于、⼤于等于、 ⼩于、⼩于等于、不等于其中的所有数据。当所有数据都满足才是true，会返回满足所有条件的数据。</p>
+</div>
+现添加c表和stuc表，c表中包含课程基本信息(课程号(cno)，课程名(cname)，任教教师(cteacher)，课时(ctime)……)，stuc表中包含学生选课基本信息(学号(sno)，姓名(sname)，课程号(cno)，课程名(cname)……)，现要查询姓名为张三的学生所选课程的课程号，课程名，任教教师<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> cno,cname,cteacher</span><br><span class="line"><span class="keyword">FROM</span> c</span><br><span class="line"><span class="keyword">WHERE</span> cno<span class="operator">=</span><span class="keyword">ANY</span>(<span class="keyword">SELECT</span> cno</span><br><span class="line">              <span class="keyword">FROM</span> stuc</span><br><span class="line">              <span class="keyword">WHERE</span> sname<span class="operator">=</span>&quot;张三&quot;)</span><br></pre></td></tr></table></figure>
+<h3 id="用于数据操纵的普通查询"><a href="#用于数据操纵的普通查询" class="headerlink" title="用于数据操纵的普通查询"></a>用于数据操纵的普通查询</h3>比如，将sc表中数学平均成绩进行赋分(平均成绩*80%+20)<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">UPDATE</span> sc</span><br><span class="line"><span class="keyword">SET</span> math<span class="operator">=</span>(<span class="keyword">SELECT</span> <span class="number">0.8</span><span class="operator">*</span><span class="built_in">AVG</span>(math)<span class="operator">+</span><span class="number">20</span></span><br><span class="line">          <span class="keyword">FROM</span> sc); </span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="相关子查询"><a href="#相关子查询" class="headerlink" title="相关子查询"></a>相关子查询</h2><p>在某些查询任务中，子查询的查询条件需要引用父查询表中的属性值，这类查询成为相关子查询</p>
+<p>相关子查询的查询顺序：首先，选取父查询表中的第一行记录，子查询利用此行中相关的属性值在子查询涉及的基本表中进行查询，然后，父查询根据子查询返回的结果判断父查询表中的此行是否满足条件如果满足条件，则把该行放入父查询的查询结果集合中，重复执行这一过程，知道处理完父查询表中的每一行数据</p>
+<p>比如，查询学生的学号，姓名，查询条件是该学生选课中有c1课程<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> sno,sname</span><br><span class="line"><span class="keyword">FROM</span> s</span><br><span class="line"><span class="keyword">WHERE</span> &quot;c1&quot; <span class="keyword">IN</span> (<span class="keyword">SELECT</span> cno</span><br><span class="line">               <span class="keyword">FROM</span> stuc</span><br><span class="line">               <span class="keyword">WHERE</span> sno<span class="operator">=</span>s.sno);</span><br></pre></td></tr></table></figure></p>
+<h2 id="集合运算查询"><a href="#集合运算查询" class="headerlink" title="集合运算查询"></a>集合运算查询</h2><p>集合运算查询是使用<code>UNION</code>关键字将来自不同查询的数据组合起来，形成一个具有综合信息的查询结果，使用<code>UNION</code>时，系统会自动将重复的数据行剔除</p>
+<div class="note danger morden flat"><p>参加集合运算查询的各子查询，其查询结果的结果应该是相同的，即各子查询结果中数据的数目和对应的数据类型都必须相同</p>
+</div>
+<p>比如，查询主修为计算机专业的学生，再查询主修为数学的学生<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span></span><br><span class="line"><span class="keyword">FROM</span> s</span><br><span class="line"><span class="keyword">WHERE</span> major<span class="operator">=</span>&quot;计算机&quot;</span><br><span class="line"><span class="keyword">UNION</span></span><br><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span></span><br><span class="line"><span class="keyword">FROM</span> s</span><br><span class="line"><span class="keyword">WHERE</span> major<span class="operator">=</span>&quot;数学&quot;;</span><br></pre></td></tr></table></figure></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="http://lucylcarus.github.io">ICARUS</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="http://lucylcarus.github.io/posts/b3623411.html">http://lucylcarus.github.io/posts/b3623411.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://lucylcarus.github.io" target="_blank">ICARUS</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/MySQL/">MySQL</a></div><div class="post_share"><div class="social-share" data-image="https://www.helloimg.com/i/2024/11/19/673c83ed68ff8.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/posts/d5a6d90f.html"><img class="prev-cover" src="https://www.helloimg.com/i/2024/11/19/673c887eab800.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">Linux命令行(三)</div><div class="content">Linux不仅系统性能稳定，而且是开源软件。其核心防火墙组件性能高效、配置简单，保证了系统的安全。在很多企业网络中，为了追求速度和安全，Linux不仅仅是被网络运维人员当作服务器使用，甚至当作网络防火墙，这是Linux的一大亮点。</div></div></a></div><div class="next-post pull-right"><a href="/posts/ab55f924.html"><img class="next-cover" src="https://www.helloimg.com/i/2024/11/19/673c105437725.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Linux命令行(二)</div><div class="content">伴随着互联网的发展，Linux得到了来自全世界软件爱好者、组织、公司的支持。它除了在服务器方面保持着强劲的发展势头以外，在个人电脑、嵌入式系统上都有着长足的进步。使用者不仅可以直观地获取该操作系统的实现机制，而且可以根据自身的需要来修改完善Linux，使其最大化地适应用户的需要。</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/posts/ed03a884.html" title="MySQL语法使用(一)"><img class="cover" src="https://www.helloimg.com/i/2024/11/19/673c1dde02d70.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-09-16</div><div class="title">MySQL语法使用(一)</div><div class="info">MySQL是一个关系型数据库管理系统,是最流行的关系型数据库管理系统之一，关系数据库将数据保存在不同的表中，而不是将所有数据放在一个大仓库内，这样就增加了速度并提高了灵活性。MySQL所使用的 SQL 语言是用于访问数据库的最常用标准化语言。</div></div></a></div><div><a href="/posts/4921db1e.html" title="MySQL语法使用(三)"><img class="cover" src="https://www.helloimg.com/i/2024/11/19/673c15fa38f6a.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-10-16</div><div class="title">MySQL语法使用(三)</div><div class="info">MySQL是最流行的关系型数据库管理系统，在WEB应用方面MySQL是最好的关系数据库管理系统应用软件之一。</div></div></a></div><div><a href="/posts/37d2fb35.html" title="MySQL语法使用(二)"><img class="cover" src="https://www.helloimg.com/i/2024/11/19/673c1cd3822d3.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-09-20</div><div class="title">MySQL语法使用(二)</div><div class="info">MySQL软件采用了双授权政策，分为社区版和商业版，由于其体积小、速度快、总体拥有成本低，尤其是开放源码这一特点，一般中小型和大型网站的开发都选MySQL作为网站数据库。</div></div></a></div></div></div><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="gitalk-container"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://www.helloimg.com/i/2024/11/09/672f8190562c8.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">ICARUS</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">16</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">5</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/lucylcarus"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/lucylcarus" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="https://space.bilibili.com/531455345?spm_id_from=333.1007.0.0" target="_blank" title="BILIBILI"><i class="iconfont icon-bilibili" style="color: rgb(0,160,216);"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">欢迎来到我的博客</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%A4%9A%E5%85%B3%E7%B3%BB%E6%95%B0%E6%8D%AE%E6%9F%A5%E8%AF%A2"><span class="toc-number">1.</span> <span class="toc-text">多关系数据查询</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%9A%E5%85%B3%E7%B3%BB%E6%9F%A5%E8%AF%A2%E7%BB%93%E6%9E%84"><span class="toc-number">1.1.</span> <span class="toc-text">多关系查询结构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%86%85%E8%BF%9E%E6%8E%A5%E6%9F%A5%E8%AF%A2"><span class="toc-number">1.2.</span> <span class="toc-text">内连接查询</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%96%E8%BF%9E%E6%8E%A5%E6%9F%A5%E8%AF%A2"><span class="toc-number">1.3.</span> <span class="toc-text">外连接查询</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%A4%E5%8F%89%E8%BF%9E%E6%8E%A5%E6%9F%A5%E8%AF%A2"><span class="toc-number">1.4.</span> <span class="toc-text">交叉连接查询</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%87%AA%E8%BF%9E%E6%8E%A5%E6%9F%A5%E8%AF%A2"><span class="toc-number">1.5.</span> <span class="toc-text">自连接查询</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%AD%90%E6%9F%A5%E8%AF%A2"><span class="toc-number">2.</span> <span class="toc-text">子查询</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%99%AE%E9%80%9A%E5%AD%90%E6%9F%A5%E8%AF%A2"><span class="toc-number">2.1.</span> <span class="toc-text">普通子查询</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%94%E5%9B%9E%E4%B8%80%E4%B8%AA%E5%80%BC%E7%9A%84%E6%99%AE%E9%80%9A%E5%AD%90%E6%9F%A5%E8%AF%A2"><span class="toc-number">2.1.1.</span> <span class="toc-text">返回一个值的普通子查询</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%94%E5%9B%9E%E4%B8%80%E7%BB%84%E5%80%BC%E7%9A%84%E6%99%AE%E9%80%9A%E5%AD%90%E6%9F%A5%E8%AF%A2"><span class="toc-number">2.1.2.</span> <span class="toc-text">返回一组值的普通子查询</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%A8%E4%BA%8E%E6%95%B0%E6%8D%AE%E6%93%8D%E7%BA%B5%E7%9A%84%E6%99%AE%E9%80%9A%E6%9F%A5%E8%AF%A2"><span class="toc-number">2.1.3.</span> <span class="toc-text">用于数据操纵的普通查询</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%9B%B8%E5%85%B3%E5%AD%90%E6%9F%A5%E8%AF%A2"><span class="toc-number">2.2.</span> <span class="toc-text">相关子查询</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%9B%86%E5%90%88%E8%BF%90%E7%AE%97%E6%9F%A5%E8%AF%A2"><span class="toc-number">2.3.</span> <span class="toc-text">集合运算查询</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/posts/d5a6d90f.html" title="Linux命令行(三)"><img src="https://www.helloimg.com/i/2024/11/19/673c887eab800.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Linux命令行(三)"/></a><div class="content"><a class="title" href="/posts/d5a6d90f.html" title="Linux命令行(三)">Linux命令行(三)</a><time datetime="2024-11-16T09:09:23.000Z" title="发表于 2024-11-16 17:09:23">2024-11-16</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/b3623411.html" title="MySQL语法使用(四)"><img src="https://www.helloimg.com/i/2024/11/19/673c83ed68ff8.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="MySQL语法使用(四)"/></a><div class="content"><a class="title" href="/posts/b3623411.html" title="MySQL语法使用(四)">MySQL语法使用(四)</a><time datetime="2024-11-12T07:42:09.000Z" title="发表于 2024-11-12 15:42:09">2024-11-12</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/ab55f924.html" title="Linux命令行(二)"><img src="https://www.helloimg.com/i/2024/11/19/673c105437725.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Linux命令行(二)"/></a><div class="content"><a class="title" href="/posts/ab55f924.html" title="Linux命令行(二)">Linux命令行(二)</a><time datetime="2024-11-09T09:09:23.000Z" title="发表于 2024-11-09 17:09:23">2024-11-09</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/b4c31191.html" title="Ren'py 历史记录界面修改"><img src="https://www.helloimg.com/i/2024/11/19/673c113675204.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Ren'py 历史记录界面修改"/></a><div class="content"><a class="title" href="/posts/b4c31191.html" title="Ren'py 历史记录界面修改">Ren'py 历史记录界面修改</a><time datetime="2024-11-07T01:42:21.000Z" title="发表于 2024-11-07 09:42:21">2024-11-07</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/9211474f.html" title="Linux命令行(一)"><img src="https://www.helloimg.com/i/2024/11/19/673c10981a3fb.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Linux命令行(一)"/></a><div class="content"><a class="title" href="/posts/9211474f.html" title="Linux命令行(一)">Linux命令行(一)</a><time datetime="2024-11-04T09:09:23.000Z" title="发表于 2024-11-04 17:09:23">2024-11-04</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2024 By ICARUS</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.13.0"></script><script src="/js/main.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><script>(() => {
+  const initGitalk = () => {
+    const gitalk = new Gitalk(Object.assign({
+      clientID: 'Ov23li5LzRKF1WX1Jk4J',
+      clientSecret: '33eb011d6460b8ca39349464fc7fb6057753b748',
+      repo: 'gittalk',
+      owner: 'lucylcarus',
+      admin: ['lucylcarus'],
+      id: 'd1f4405f5ddaaa569a19572244741303',
+      updateCountCallback: commentCount
+    },null))
+
+    gitalk.render('gitalk-container')
+  }
+
+  const loadGitalk = async() => {
+    if (typeof Gitalk === 'function') initGitalk()
+    else {
+      await getCSS('https://cdn.jsdelivr.net/npm/gitalk@1.8.0/dist/gitalk.min.css')
+      await getScript('https://cdn.jsdelivr.net/npm/gitalk@1.8.0/dist/gitalk.min.js')
+      initGitalk()
+    }
+  }
+  
+  const commentCount = n => {
+    const isCommentCount = document.querySelector('#post-meta .gitalk-comment-count')
+    if (isCommentCount) {
+      isCommentCount.textContent= n
+    }
+  }
+
+  if ('Gitalk' === 'Gitalk' || !false) {
+    if (false) btf.loadComment(document.getElementById('gitalk-container'), loadGitalk)
+    else loadGitalk()
+  } else {
+    window.loadOtherComment = loadGitalk
+  }
+})()</script></div><script src="/js/snowflake.js"></script><div class="aplayer no-destroy" data-id="12622671053" data-server="netease" data-type="playlist"   data-order="list" data-fixed="true" data-preload="auto" data-autoplay="false" data-mutex="true" ></div><script id="canvas_nest" defer="defer" color="0,0,255" opacity="0.7" zIndex="-1" count="99" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/dist/canvas-nest.min.js"></script><script id="click-show-text" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/dist/click-show-text.min.js" data-mobile="false" data-text="Ciallo～(∠・ω&lt; )⌒★" data-fontsize="15px" data-random="false" async="async"></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/metingjs/dist/Meting.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js?v=4.13.0"></script></div></div><!-- hexo injector body_end start --><script async src="/js/ali_font.js"></script><div class="js-pjax"><script async="async">var arr = document.getElementsByClassName('recent-post-item');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__zoomIn');
+    arr[i].setAttribute('data-wow-duration', '1.5s');
+    arr[i].setAttribute('data-wow-delay', '200ms');
+    arr[i].setAttribute('data-wow-offset', '30');
+    arr[i].setAttribute('data-wow-iteration', '1');
+  }</script><script async="async">var arr = document.getElementsByClassName('card-widget');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__zoomIn');
+    arr[i].setAttribute('data-wow-duration', '');
+    arr[i].setAttribute('data-wow-delay', '200ms');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script><script async="async">var arr = document.getElementsByClassName('flink-list-card');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__flipInY');
+    arr[i].setAttribute('data-wow-duration', '3s');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script><script async="async">var arr = document.getElementsByClassName('flink-list-card');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__animated');
+    arr[i].setAttribute('data-wow-duration', '3s');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script><script async="async">var arr = document.getElementsByClassName('article-sort-item');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__slideInRight');
+    arr[i].setAttribute('data-wow-duration', '1.5s');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script><script async="async">var arr = document.getElementsByClassName('site-card');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__flipInY');
+    arr[i].setAttribute('data-wow-duration', '3s');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script><script async="async">var arr = document.getElementsByClassName('site-card');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__animated');
+    arr[i].setAttribute('data-wow-duration', '3s');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script></div><script defer src="https://cdn.cbd.int/hexo-butterfly-wowjs/lib/wow.min.js"></script><script defer src="https://cdn.cbd.int/hexo-butterfly-wowjs/lib/wow_init.js"></script><!-- hexo injector body_end end --><script async>window.onload=function(){var a=document.createElement('script'),b=document.getElementsByTagName('script')[0];a.type='text/javascript',a.async=!0,a.src='/sw-register.js?v='+Date.now(),b.parentNode.insertBefore(a,b)};</script></body></html>
