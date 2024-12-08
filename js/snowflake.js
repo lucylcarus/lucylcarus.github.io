@@ -1,3 +1,4 @@
+//下雪动效
 if((navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i))) {
     // 移动端不显示
   }
@@ -104,3 +105,20 @@ if((navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobil
     }
     )();
   }
+//动态标题
+var OriginTitile = document.title;
+var titleTime;
+document.addEventListener("visibilitychange", function () {
+  if (document.hidden) {
+    //离开当前页面时标签显示内容
+    document.title = "w(ﾟДﾟ)w 不要走！再看看嘛！";
+    clearTimeout(titleTime);
+  } else {
+    //返回当前页面时标签显示内容
+    document.title = "♪(^∇^*)欢迎回来！" + OriginTitile;
+    //两秒后变回正常标题
+    titleTime = setTimeout(function () {
+      document.title = OriginTitile;
+    }, 2000);
+  }
+});

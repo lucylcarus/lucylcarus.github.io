@@ -2791,9 +2791,6 @@ figure.highlight pre .javascript .function {
   font-weight: bold;
   font-size: 1.5em;
 }
-#recent-posts > .recent-post-item:not(:first-child) {
-  margin-top: 20px;
-}
 #recent-posts > .recent-post-item {
   display: -webkit-box;
   display: -moz-box;
@@ -3237,6 +3234,9 @@ h1.page-title + .tag-cloud-list {
   -o-transform: rotate(0);
   -ms-transform: rotate(0);
   transform: rotate(0);
+}
+#aside-content .card-categories .card-category-list > .parent > .child {
+  display: none;
 }
 #aside-content .card-webinfo .webinfo .webinfo-item {
   display: -webkit-box;
